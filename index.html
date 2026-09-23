@@ -1,228 +1,43 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>A message for Thanh Lam 💌</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="images/seal.png" />
-
-  <!-- HARD OVERRIDES: make page scrollable + mobile-fit letters -->
-  <style>
-    /* ===== Unblock scrolling from old CSS ===== */
-    html, body, main, .app { height: auto !important; }
-    body { overflow-y: auto !important; overflow-x: hidden !important; }
-
-    /* ===== Steps in normal flow (not absolute 100% screens) ===== */
-    .step {
-      position: static !important;
-      inset: auto !important;
-      width: 100% !important;
-      height: auto !important;
-      display: none;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 1rem;
-      padding: 1.25rem 1rem 5rem;
-    }
-    .step.active { display: flex; }
-    .step-1 { align-items: center; min-height: 90vh; }
-
-    /* ===== Keep content above decorations ===== */
-    .app { position: relative !important; z-index: 5 !important; }
-
-    /* ===== Balloons (non-interactive, behind) ===== */
-    #balloon-layer { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
-    .balloon {
-      position: absolute; width: 36px; height: 44px;   /* a bit smaller for phones */
-      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-      bottom: -100px; opacity: .8; animation: rise linear infinite;
-    }
-    .balloon::after { content:''; position:absolute; width:2px; height:44px; background:#fff; left:50%; top:44px; }
-    @keyframes rise { to { transform: translateY(-115vh); } }
-
-    /* ===== Corner photos: hover only, no frame/shadow/background ===== */
-    .corner-photos { position: fixed; inset: 0; z-index: 3; pointer-events: none; }
-    .corner-photos img {
-      pointer-events: auto;
-      position: absolute;
-      width: min(150px, 24vw);
-      aspect-ratio: 1/1;
-      object-fit: cover;
-      background: transparent;
-      border: none; outline: none; box-shadow: none !important;
-      border-radius: 14px;
-      transition: transform .18s ease;
-    }
-    .corner-photos img:hover { transform: scale(1.08) rotate(-2deg); }
-    /* push a bit outward so letters won't cover */
-    .corner.tl { top: 7%;  left: 4%; }
-    .corner.tr { top: 7%;  right: 4%; }
-    .corner.bl { bottom: 7%; left: 4%; }
-    .corner.br { bottom: 7%; right: 4%; }
-    @media (max-width: 640px){
-      .corner-photos img { width: 22vw; border-radius: 12px; }
-    }
-
-    /* ===== Letters grid: MOBILE FIRST ===== */
-    .letters-wrapper { width: 100%; max-width: 960px; margin: 0 auto; }
-    .letters-grid{
-      display: grid;
-      grid-template-columns: 1fr;             /* 1 column on phones */
-      gap: 12px;                               /* tight gap for phones */
-      max-width: 520px;                        /* keep it compact */
-      margin: 0 auto;
-    }
-    /* bump to 2 columns on wider screens */
-    @media (min-width: 540px){
-      .letters-grid{
-        grid-template-columns: repeat(2, minmax(180px, 1fr));
-        max-width: 720px;
-        gap: 14px;
-      }
-    }
-
-    /* ===== Letter card: smaller profile ===== */
-    .letter-card-xl{
-      background: rgba(255,246,237,.55);
-      border: 2px solid rgba(255,246,237,1);
-      border-radius: 20px;                     /* smaller radius reads cleaner on phone */
-      padding: 1rem .9rem .9rem;
-      height: 165px;                           /* SHRUNK to fit mobile */
-      display: grid; place-items: center;
-      cursor: pointer; overflow: hidden;
-      transition: transform .14s ease;
-    }
-    .letter-card-xl:hover{ transform: translateY(-2px); }
-
-    .env-large{
-      width: 92%; max-width: 280px; aspect-ratio: 16/11;
-      background: #fff7ee; border-radius: 16px; position: relative;
-      display: grid; place-items: center; overflow: hidden;
-    }
-    .env-large::before{
-      content:""; position:absolute; inset:0 0 auto 0; height:56%;
-      background:#f2e6d1; clip-path: polygon(0 0, 100% 0, 50% 72%);
-    }
-    .env-text{ position:relative; z-index:2; text-align:center; color:#742c22; }
-    .env-text .from{ font-size:.8rem; letter-spacing:.07em; opacity:.85; margin-bottom:.1rem; }
-    .env-text .name{ font-weight:800; font-size:1.15rem; line-height:1.05; }
-
-    /* Modal text scroll room */
-    .modal-text { max-height: 65vh; overflow: auto; }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A collection of farewell messages for Điệp.">
+  <title>A special message for Điệp</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <!-- balloons behind everything -->
-  <div id="balloon-layer" aria-hidden="true"></div>
-
-  <!-- photos -->
-  <div class="corner-photos" aria-hidden="true">
-    <img src="images/lam-1.png" alt="Lam photo 1" class="corner tl" />
-    <img src="images/lam-2.png" alt="Lam photo 2" class="corner tr" />
-    <img src="images/lam-3.png" alt="Lam photo 3" class="corner bl" />
-    <img src="images/lam-4.png" alt="Lam photo 4" class="corner br" />
-  </div>
-
   <main class="app">
-    <!-- STEP 1 -->
-    <section class="step step-1 active" id="step-1">
-      <div class="intro-card">
-        <p class="intro-title">A special message for Thanh Lam</p>
-        <button class="btn-primary" id="btn-open">Unfold</button>
+    <section class="screen intro-screen" id="intro-screen" aria-labelledby="intro-title">
+      <div class="intro-content">
+        <h1 id="intro-title">A special message for Điệp</h1>
+        <button class="primary-button" id="unfold-button" type="button">Unfold</button>
       </div>
     </section>
 
-    <!-- STEP 2 -->
-    <section class="step step-2" id="step-2">
-      <div class="letters-wrapper" style="text-align:center;margin:0 auto;">
-        <h1 class="headline">Happy Birthday, Lam! 💗</h1>
-        <p class="subtext">Here are letters from hội cy em mik. Click to read nha.</p>
-
-        <div class="letters-grid" id="letters-grid">
-          <article class="letter-card-xl" data-from="from Kylie" 
-            data-message="Dear Lammmm 🫶
-Hehe chúc em sinh nhật tuổi 20 thiệt nhiều tiếng cười, thiệt xinh đẹp và hạnh phúc nha. K nghĩ mình biết nhau được 3 năm rùi í, thời gian trôi qua nhanh thiệt (nma gặp off hơi ít nha, phải gặp thêm!!). Chúc Lya mãi vui vẻ, tích cực, giỏi giang và xinh xắn nhớ^^ Tuổi mới đạt được hết mục tiêu đề ra, ước gì được nấy nekkk. Welcome to hội U30 😭 Giờ mình được trêu thg kiên là con nít ranh r=))))
-Thank you for being very supportive, for being by my side, for being a nice sis to me <3 
-            Mãi iuu,
-            Kylie">
-            <div class="env-large"><div class="env-text"><div class="from">LETTER FROM</div><div class="name">Kylie</div></div></div>
-          </article>
-
-          <article class="letter-card-xl" data-from="from Michael" data-message="dear bà lya,
-I've been knowin' yo bum ahh since when we were still in highschool. Now im sophomore and ur u30 (lol), you have become such a slay queen, cutesie and demure. Just wanna say that I appreciate that ur still here with us and I enjoy your presence a lot around everyone. You really make the voicechat more joyful and trollier.
-Mừng ngày lya đc đẻ nhé
-Sincerely, mike">
-            <div class="env-large"><div class="env-text"><div class="from">LETTER FROM</div><div class="name">Michael</div></div></div>
-          </article>
-
-          <article class="letter-card-xl" data-from="from Sweet" data-message="chúc chị tuổi 20 thật đẹp!!! tiếp cận đầu 2x is ‘FIRE’!! it’s like starting a new chapter of your lifeee! hope all the pages are filled with rainbow colors only 🤞🤞🤞">
-            <div class="env-large"><div class="env-text"><div class="from">LETTER FROM</div><div class="name">Sweet</div></div></div>
-          </article>
-
-          <article class="letter-card-xl" data-from="from Kylie's special friend" data-message="Happy birthday Thanh LAMMM!!!!! 
-
-Chúc mừng sinh nhật 20 tuổi của Thanh Lam cực kỳ xinh xắn, dễ thương và cu ti nhất trái đất! Chúc em tuổi mới thật nhiều niềm vui, luôn cười thật là tươi mỗi ngày, da đẹp hơn, và túi tiền đầy như niêu cơm của thạch sanh, và không ai hỏi bao giờ lấy chồng. Mong em luôn gặp điều tốt đẹp, lấy chồng sớm, ăn ngon ngủ ngon, và giữ mãi sự tươi trẻ, dễ thương, nghịch ngợm vui vẻ và duyên dáng như bây giờ. Chúc em tuổi 20 xinh hơn, và thành công rực rỡ và mỗi ngày đều vui như sinh nhật! - From bạn Kylie">
-            <div class="env-large"><div class="env-text"><div class="from">LETTER FROM</div><div class="name">Kylie's special friend</div></div></div>
-          </article>
-        </div>
+    <section class="screen letters-screen" id="letters-screen" aria-labelledby="letters-title" hidden>
+      <div class="letters-content">
+        <h1 id="letters-title" tabindex="-1">For Điệp, before Japan.</h1>
+        <ul class="letters-list" id="letters-list" aria-label="Letters for Điệp"></ul>
       </div>
     </section>
-
-    <!-- MODAL -->
-    <div class="letter-modal" id="letter-modal">
-      <div class="letter-popup">
-        <button class="modal-close" id="modal-close" aria-label="close">&times;</button>
-        <p class="modal-from" id="modal-from"></p>
-        <h2 class="modal-title">A letter for Lam</h2>
-        <p class="modal-text" id="modal-text"></p>
-      </div>
-    </div>
-
-    <footer class="footer">from cy em mik 💗</footer>
   </main>
 
-  <!-- JS: step switch, modal, balloons -->
-  <script>
-    // Switch to Step 2 and hard-hide Step 1 so it can't block scroll
-    const step1 = document.getElementById('step-1');
-    const step2 = document.getElementById('step-2');
-    document.getElementById('btn-open').addEventListener('click', () => {
-      step1.classList.remove('active');
-      step1.style.display = 'none';     // IMPORTANT: remove from flow
-      step2.classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    // Modal
-    const modal = document.getElementById('letter-modal');
-    const modalFrom = document.getElementById('modal-from');
-    const modalText = document.getElementById('modal-text');
-    document.getElementById('modal-close').addEventListener('click', () => modal.classList.remove('show'));
-    modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('show'); });
-    document.querySelectorAll('.letter-card-xl').forEach(card => {
-      card.addEventListener('click', () => {
-        modalFrom.textContent = card.dataset.from || '';
-        modalText.textContent  = card.dataset.message || '';
-        modal.classList.add('show');
-      });
-    });
-
-    // Balloons
-    document.addEventListener('DOMContentLoaded', () => createBalloons(15));
-    function createBalloons(count) {
-      const host = document.getElementById('balloon-layer');
-      const colors = ['#e94560', '#f0e68c', '#00d8d6', '#8e44ad', '#3498db'];
-      for (let i = 0; i < count; i++) {
-        const b = document.createElement('div');
-        b.className = 'balloon';
-        b.style.left = `${Math.random() * 100}vw`;
-        b.style.animationDuration = `${Math.random() * 6 + 8}s`;
-        b.style.animationDelay = `${Math.random() * 5}s`;
-        b.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        host.appendChild(b);
-      }
-    }
-  </script>
+  <dialog class="letter-dialog" id="letter-dialog" aria-labelledby="dialog-sender" aria-describedby="dialog-message">
+    <div class="dialog-content">
+      <button
+        class="dialog-close"
+        id="dialog-close"
+        type="button"
+        aria-label="Close letter"
+        title="Close letter"
+      >&times;</button>
+      <p class="dialog-label">Letter from</p>
+      <h2 id="dialog-sender"></h2>
+      <p class="dialog-message" id="dialog-message"></p>
+    </div>
+  </dialog>
 </body>
 </html>

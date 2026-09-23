@@ -1,104 +1,148 @@
-// ========== DATA LỜI CHÚC ==========
-const lettersData = [
+const letters = [
   {
-    sender: "Kylie",
-    role: "bestie 1/4",
-    label: "from Kylie",
-    message: `Lam ơii 🫶
-Cảm ơn vì đã ở trong nhóm tụi mình nha.
-Chúc Lam tuổi mới chill hơn, ít tự gây áp lực cho mình hơn và làm được mấy goal bí mật á.
-Bọn t ở đây, lúc nào cần thì gõ nha 💗`
+    sender: "Công",
+    message: `Chúc bạn Điệp sang Nhật thuận lợi nhé. Hi vọng bạn luôn mạnh khỏe, may mắn và có thật nhiều trải nghiệm đáng nhớ ở một hành trình mới. Sang đấy nhớ quay nhiều vlog vào để tui còn xem, đi họp đồng hương nhớ về sớm đừng la cà linh tinh. Nào có dịp tui sẽ sang đấy chơi hehe.`
   },
   {
-    sender: "Michael",
-    role: "đại diện hội 4 đứa",
-    label: "from Michael",
-    message: `Happy birthday Lam!
-Tuổi mới mong mày cứ tự tin chọn cái mày muốn, tụi này sẽ support.
-Đi ăn đi chơi nhớ rủ nhaaa 🍣`
+    sender: "Trà My",
+    message: `Chúc bạn Điệp thượng lộ bình an, sang bên đó mọi thứ đều suôn sẻ và có thật nhiều trải nghiệm đáng nhớ nhé, mong cuộc sống mới của b có nhiều điều may mắn, có nhiều niềm vui hơn ở bển nhaa`
   },
   {
-    sender: "Sweet",
-    role: "đứa ngọt nhất team",
-    label: "from Sweet",
-    message: `Lam bé ơiii 💗
-Chúc mừng sinh nhật!!
-Mong c luôn thấy mình đáng yêu, đáng nhận love như tụi này nhìn c nha.
-Cứ vui nè, còn drama để tụi này xử 🤭`
+    sender: "Thuỳ Trang",
+    message: `Cuối cùng ngày ấy cũng đến, ngày anh ấy bay đi và tôi không còn được nhìn thấy anh ấy nữa, được nghe giọng nói thảo mai và hay kháy đểu mọi người…
+
+Chúc bạn mình bay cao bay xa bay lên thành leader và đừng quên mình nhé! Mãi một trái tim chờ mong tại Việt Nam
+
+Bạn sang đấy mạnh giỏi, ăn uống khoẻ mạnh, sớm giàu sang, phát đạt
+
+Dù là 5 năm hay 10 năm thì vẫn sẽ chờ bạn mình nhé!!! Mãi mến thương huhu`
   },
   {
-    sender: "Naan",
-    role: "năng lượng nữ chính",
-    label: "from Naan",
-    message: `Lammm 🥹
-Cảm ơn vì ở lại chơi chung với tụi t, nhóm thiếu c là tụi t hụt mood liền.
-Tuổi mới hiền với bản thân hơn xíu, ngủ sớm hơn xíu và gặp toàn người dễ thương nha 💕`
+    sender: "Linh Anh",
+    message: `abc`
+  },
+  {
+    sender: "Ly",
+    message: `Hi Điệp nhá:) Giờ này Điệp đang ở Nhật nhỉ. Không khí ở đó như nào, thời tiết giờ ra sao, có như ở VN không? Bây giờ Điệp đang cảm thấy gì? Chắc lúc mới đến vừa hồi hộp mà vừa phấn khởi nhỉ. Chúc Điệp với cuộc hành trình mới toanh này thật nhiều may mắn, gặp được những người đồng nghiệp tốt, những người bạn hợp cạ, gặp được quý nhân phù trợ trên con đường sắp tới. Chắc chắn sẽ có rất nhiều khó khăn ở phía trước, nhưng Điệp sẽ vượt qua thôi:D Chúc cho những trải nghiệm mới này sẽ làm dày dặn thêm thế giới quan của Điệp, làm Điệp tiến gần hơn với mục tiêu cuộc đời mình. Nghe sến nhỉ:) nma lời từ thật lòng hết đó. Đọc cái này khi cần nhá haha.
+
+Với t thì Điệp sẽ luôn là 1 người bạn tốt. T thấy Điệp có nội lực, có personality nma chưa bung toả hết ra (hoặc do t ko nch với m nhiều😀). Chúc Điệp lột xác, trở thành phiên bản tốt hơn của bản thân nhá, cố lên💪Mong bao giờ t đến Nhật chơi trong tương lai thì Điệp làm hướng dẫn viên haha:D
+
+Với cả nhớ update trên tiktok đấy:))) Bọn t sẽ dõi theo m. Đó, chúc có vậy thui, nếu cần giúp gì thì t sẵn sàng nhá, sau này nhớ đến bạn là đc😌
+
+うまくいきますように🍀!
+
+kly`
   }
 ];
 
-// ========== DOM ELEMENTS ==========
-const step1 = document.getElementById("step-1");
-const step2 = document.getElementById("step-2");
-const btnOpen = document.getElementById("btn-open");
-const lettersGrid = document.getElementById("letters-grid");
-const modal = document.getElementById("letter-modal");
-const modalFrom = document.getElementById("modal-from");
-const modalText = document.getElementById("modal-text");
-const modalClose = document.getElementById("modal-close");
+const introScreen = document.querySelector("#intro-screen");
+const lettersScreen = document.querySelector("#letters-screen");
+const lettersTitle = document.querySelector("#letters-title");
+const unfoldButton = document.querySelector("#unfold-button");
+const lettersList = document.querySelector("#letters-list");
+const letterDialog = document.querySelector("#letter-dialog");
+const dialogSender = document.querySelector("#dialog-sender");
+const dialogMessage = document.querySelector("#dialog-message");
+const dialogClose = document.querySelector("#dialog-close");
 
-// ========== STEP CHANGE ==========
-btnOpen.addEventListener("click", () => {
-  step1.classList.remove("active");
-  step2.classList.add("active");
-});
+let lastFocusedElement = null;
 
-// ========== RENDER LETTER CARDS ==========
-lettersData.forEach((item) => {
-  const card = document.createElement("article");
-  card.className = "letter-card";
-  card.innerHTML = `
-    <div class="tiny-envelope"></div>
-    <p class="letter-meta">Letter</p>
-    <h3 class="letter-name">${item.sender}</h3>
-    <p class="letter-role">${item.role || ""}</p>
-  `;
-  card.addEventListener("click", () => openLetter(item));
-  lettersGrid.appendChild(card);
-});
+function renderLetters() {
+  const fragment = document.createDocumentFragment();
 
-// ========== OPEN / CLOSE MODAL ==========
-function openLetter(letter) {
-  modalFrom.textContent = letter.label;
-  modalText.textContent = letter.message;
-  modal.classList.add("show");
+  letters.forEach((letter) => {
+    const listItem = document.createElement("li");
+    const card = document.createElement("button");
+    const label = document.createElement("span");
+    const sender = document.createElement("span");
+
+    card.className = "letter-card";
+    card.type = "button";
+    card.setAttribute("aria-haspopup", "dialog");
+
+    label.className = "letter-card-label";
+    label.textContent = "Letter from";
+
+    sender.className = "letter-card-sender";
+    sender.textContent = letter.sender;
+
+    card.append(label, sender);
+    card.addEventListener("click", () => openLetter(letter, card));
+    listItem.append(card);
+    fragment.append(listItem);
+  });
+
+  lettersList.append(fragment);
 }
 
-modalClose.addEventListener("click", () => {
-  modal.classList.remove("show");
-});
+function showLetters() {
+  const revealLetters = () => {
+    introScreen.hidden = true;
+    introScreen.classList.remove("is-leaving");
+    lettersScreen.hidden = false;
+    lettersScreen.classList.add("is-visible");
+    lettersTitle.focus();
+  };
 
-modal.addEventListener("click", (e) => {
-  // click ra ngoài để tắt
-  if (e.target === modal) {
-    modal.classList.remove("show");
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    revealLetters();
+    return;
   }
-  // ===== Balloons (Úc style) =====
-document.addEventListener("DOMContentLoaded", () => {
-  createBalloons(15); // tweak count if you want
-});
 
-function createBalloons(count) {
-  const host = document.getElementById('balloon-layer');
-  const colors = ['#e94560', '#f0e68c', '#00d8d6', '#8e44ad', '#3498db'];
-  for (let i = 0; i < count; i++) {
-    const balloon = document.createElement('div');
-    balloon.className = 'balloon';
-    balloon.style.left = `${Math.random() * 100}vw`;
-    balloon.style.animationDuration = `${Math.random() * 6 + 8}s`; // 8–14s
-    balloon.style.animationDelay = `${Math.random() * 5}s`;
-    balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    host.appendChild(balloon);
+  introScreen.classList.add("is-leaving");
+  introScreen.addEventListener("animationend", revealLetters, { once: true });
+}
+
+function openLetter(letter, card) {
+  lastFocusedElement = card;
+  dialogSender.textContent = letter.sender;
+  dialogMessage.textContent = letter.message;
+  document.body.classList.add("modal-open");
+  letterDialog.showModal();
+  dialogClose.focus();
+}
+
+function closeLetter() {
+  if (letterDialog.open) {
+    letterDialog.close();
+    handleDialogClose();
   }
 }
 
+function handleDialogClose() {
+  if (letterDialog.open) {
+    return;
+  }
+
+  document.body.classList.remove("modal-open");
+
+  if (lastFocusedElement?.isConnected) {
+    lastFocusedElement.focus();
+  }
+
+  lastFocusedElement = null;
+}
+
+function handleBackdropClick(event) {
+  const bounds = letterDialog.getBoundingClientRect();
+  const clickedOutside =
+    event.clientX < bounds.left ||
+    event.clientX > bounds.right ||
+    event.clientY < bounds.top ||
+    event.clientY > bounds.bottom;
+
+  if (clickedOutside) {
+    closeLetter();
+  }
+}
+
+unfoldButton.addEventListener("click", showLetters);
+dialogClose.addEventListener("click", closeLetter);
+letterDialog.addEventListener("click", handleBackdropClick);
+letterDialog.addEventListener("cancel", (event) => {
+  event.preventDefault();
+  closeLetter();
 });
+letterDialog.addEventListener("close", handleDialogClose);
+
+renderLetters();
