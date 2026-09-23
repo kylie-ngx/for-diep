@@ -19,7 +19,11 @@ Dù là 5 năm hay 10 năm thì vẫn sẽ chờ bạn mình nhé!!! Mãi mến 
   },
   {
     sender: "Linh Anh",
-    message: `abc`
+    message: `Saying goodbye to you today was really tough, but I’m so excited for this new chapter of yours. Wishing you all the love, luck, and huge success ahead. Shine bright out there, and see you soon!`
+  },
+  {
+    sender: "Kiều",
+    message: `Chúc Điệp thượng lộ bình an, vạn sự hạnh thông, mong mọi khó khăn ban đầu sẽ qua đi, công việc thuận lợi, suôn sẻ và gặt hái nhiều quả ngọt🫰💖`
   },
   {
     sender: "Ly",
