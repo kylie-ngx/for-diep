@@ -29,7 +29,7 @@ Dù là 5 năm hay 10 năm thì vẫn sẽ chờ bạn mình nhé!!! Mãi mến 
     sender: "Ly",
     message: `Hi Điệp nhá:) Giờ này Điệp đang ở Nhật nhỉ. Không khí ở đó như nào, thời tiết giờ ra sao, có như ở VN không? Bây giờ Điệp đang cảm thấy gì? Chắc lúc mới đến vừa hồi hộp mà vừa phấn khởi nhỉ. Chúc Điệp với cuộc hành trình mới toanh này thật nhiều may mắn, gặp được những người đồng nghiệp tốt, những người bạn hợp cạ, gặp được quý nhân phù trợ trên con đường sắp tới. Chắc chắn sẽ có rất nhiều khó khăn ở phía trước, nhưng Điệp sẽ vượt qua thôi:D Chúc cho những trải nghiệm mới này sẽ làm dày dặn thêm thế giới quan của Điệp, làm Điệp tiến gần hơn với mục tiêu cuộc đời mình. Nghe sến nhỉ:) nma lời từ thật lòng hết đó. Đọc cái này khi cần nhá haha.
 
-Với t thì Điệp sẽ luôn là 1 người bạn tốt. T thấy Điệp có nội lực, có personality nma chưa bung toả hết ra (hoặc do t ko nch với m nhiều😀). Chúc Điệp lột xác, trở thành phiên bản tốt hơn của bản thân nhá, cố lên💪Mong bao giờ t đến Nhật chơi trong tương lai thì Điệp làm hướng dẫn viên haha:D
+Với t thì Điệp sẽ luôn là 1 người bạn tốt. T thấy Điệp có nội lực, có cá tính nma chưa bung toả hết ra (hoặc do t ko nch với m nhiều😀). Chúc Điệp lột xác, trở thành phiên bản tốt hơn của bản thân nhá, cố lên💪Mong bao giờ t đến Nhật chơi trong tương lai thì Điệp làm hướng dẫn viên haha:D
 
 Với cả nhớ update trên tiktok đấy:))) Bọn t sẽ dõi theo m. Đó, chúc có vậy thui, nếu cần giúp gì thì t sẵn sàng nhá, sau này nhớ đến bạn là đc😌
 
