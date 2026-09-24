@@ -40,6 +40,7 @@ kly`
 ];
 
 const introScreen = document.querySelector("#intro-screen");
+const introContent = document.querySelector(".intro-content");
 const lettersScreen = document.querySelector("#letters-screen");
 const lettersTitle = document.querySelector("#letters-title");
 const unfoldButton = document.querySelector("#unfold-button");
@@ -47,106 +48,188 @@ const lettersList = document.querySelector("#letters-list");
 const letterDialog = document.querySelector("#letter-dialog");
 const dialogSender = document.querySelector("#dialog-sender");
 const dialogMessage = document.querySelector("#dialog-message");
+const dialogBody = document.querySelector(".dialog-body");
 const dialogClose = document.querySelector("#dialog-close");
+const sakuraLayer = document.querySelector("#sakura-layer");
+const mobilePetalsQuery = window.matchMedia("(max-width: 43.99rem)");
+const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-let lastFocusedElement = null;
+let screenState = "intro";
+let openingCard = null;
+let activeCard = null;
+let savedScroll = null;
+let backdropPress = false;
 
 function renderLetters() {
   const fragment = document.createDocumentFragment();
 
-  letters.forEach((letter) => {
+  letters.forEach((letter, index) => {
     const listItem = document.createElement("li");
     const card = document.createElement("button");
+    const flap = document.createElement("span");
+    const number = document.createElement("span");
+    const copy = document.createElement("span");
     const label = document.createElement("span");
     const sender = document.createElement("span");
+    const mark = document.createElement("span");
 
-    card.className = "letter-card";
+    card.className = "envelope";
     card.type = "button";
     card.setAttribute("aria-haspopup", "dialog");
+    card.setAttribute("aria-controls", "letter-dialog");
 
-    label.className = "letter-card-label";
+    flap.className = "envelope-flap";
+    flap.setAttribute("aria-hidden", "true");
+    mark.className = "envelope-mark";
+    mark.setAttribute("aria-hidden", "true");
+    number.className = "envelope-number";
+    number.textContent = String(index + 1).padStart(2, "0");
+    copy.className = "envelope-copy";
+    label.className = "envelope-label";
     label.textContent = "Letter from";
-
-    sender.className = "letter-card-sender";
+    sender.className = "envelope-sender";
     sender.textContent = letter.sender;
 
-    card.append(label, sender);
-    card.addEventListener("click", () => openLetter(letter, card));
+    copy.append(label, sender);
+    card.append(flap, number, copy, mark);
+    card.addEventListener("click", () => openEnvelope(letter, card));
     listItem.append(card);
     fragment.append(listItem);
   });
 
-  lettersList.append(fragment);
+  lettersList.replaceChildren(fragment);
 }
 
-function showLetters() {
-  const revealLetters = () => {
-    introScreen.hidden = true;
-    introScreen.classList.remove("is-leaving");
-    lettersScreen.hidden = false;
-    lettersScreen.classList.add("is-visible");
-    lettersTitle.focus();
-  };
+// Await CSS motion, including cancellation when reduced motion changes.
+async function finishMotion(element) {
+  await Promise.allSettled(element.getAnimations().map((animation) => animation.finished));
+}
 
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    revealLetters();
-    return;
+async function showLetters() {
+  if (screenState !== "intro") return;
+
+  screenState = "transitioning";
+  unfoldButton.setAttribute("aria-disabled", "true");
+
+  if (!reducedMotionQuery.matches) {
+    introScreen.classList.add("is-leaving");
+    await finishMotion(introContent);
   }
 
-  introScreen.classList.add("is-leaving");
-  introScreen.addEventListener("animationend", revealLetters, { once: true });
+  introScreen.hidden = true;
+  introScreen.classList.remove("is-leaving");
+  lettersScreen.hidden = false;
+  lettersScreen.classList.add("is-visible");
+  document.body.classList.add("has-letters");
+  screenState = "letters";
+  window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  lettersTitle.focus({ preventScroll: true });
 }
 
-function openLetter(letter, card) {
-  lastFocusedElement = card;
+async function openEnvelope(letter, card) {
+  if (openingCard || letterDialog.open) return;
+
+  openingCard = card;
+  card.setAttribute("aria-busy", "true");
+  card.classList.add("is-opening");
+
+  if (!reducedMotionQuery.matches) {
+    await finishMotion(card.querySelector(".envelope-flap"));
+  }
+
+  if (openingCard !== card) return;
+
+  openingCard = null;
+  card.removeAttribute("aria-busy");
+  activeCard = card;
+  savedScroll = { top: window.scrollY, left: window.scrollX };
   dialogSender.textContent = letter.sender;
   dialogMessage.textContent = letter.message;
-  document.body.classList.add("modal-open");
+  document.documentElement.classList.add("modal-open");
+  document.body.classList.add("is-reading");
   letterDialog.showModal();
-  dialogClose.focus();
+  dialogBody.scrollTop = 0;
+  dialogClose.focus({ preventScroll: true });
 }
 
 function closeLetter() {
-  if (letterDialog.open) {
-    letterDialog.close();
-    handleDialogClose();
-  }
+  if (!letterDialog.open) return;
+  letterDialog.close();
+  restorePage();
 }
 
-function handleDialogClose() {
-  if (letterDialog.open) {
-    return;
+function restorePage() {
+  if (letterDialog.open || !activeCard) return;
+
+  document.documentElement.classList.remove("modal-open");
+  document.body.classList.remove("is-reading");
+  activeCard.classList.remove("is-opening");
+
+  if (savedScroll) {
+    window.scrollTo({ ...savedScroll, behavior: "instant" });
   }
 
-  document.body.classList.remove("modal-open");
-
-  if (lastFocusedElement?.isConnected) {
-    lastFocusedElement.focus();
+  if (activeCard.isConnected) {
+    activeCard.focus({ preventScroll: true });
   }
 
-  lastFocusedElement = null;
+  activeCard = null;
+  savedScroll = null;
+  backdropPress = false;
 }
 
-function handleBackdropClick(event) {
+function isOnBackdrop(event) {
+  if (event.target !== letterDialog) return false;
   const bounds = letterDialog.getBoundingClientRect();
-  const clickedOutside =
-    event.clientX < bounds.left ||
-    event.clientX > bounds.right ||
-    event.clientY < bounds.top ||
-    event.clientY > bounds.bottom;
+  return event.clientX < bounds.left || event.clientX > bounds.right ||
+    event.clientY < bounds.top || event.clientY > bounds.bottom;
+}
 
-  if (clickedOutside) {
-    closeLetter();
+function renderSakura() {
+  const count = reducedMotionQuery.matches ? 3 : mobilePetalsQuery.matches ? 10 : 16;
+  const variants = Array.from({ length: count }, (_, index) => index + 1);
+
+  // Shuffle pre-styled variants so each visit has a different arrangement.
+  for (let index = variants.length - 1; index > 0; index -= 1) {
+    const swap = Math.floor(Math.random() * (index + 1));
+    [variants[index], variants[swap]] = [variants[swap], variants[index]];
   }
+
+  const fragment = document.createDocumentFragment();
+  variants.forEach((variant) => {
+    const petal = document.createElement("span");
+    petal.className = `sakura-petal petal-${variant}`;
+    fragment.append(petal);
+  });
+  sakuraLayer.replaceChildren(fragment);
 }
 
 unfoldButton.addEventListener("click", showLetters);
 dialogClose.addEventListener("click", closeLetter);
-letterDialog.addEventListener("click", handleBackdropClick);
+letterDialog.addEventListener("pointerdown", (event) => {
+  backdropPress = isOnBackdrop(event);
+});
+letterDialog.addEventListener("click", (event) => {
+  if (backdropPress && isOnBackdrop(event)) closeLetter();
+  backdropPress = false;
+});
 letterDialog.addEventListener("cancel", (event) => {
   event.preventDefault();
   closeLetter();
 });
-letterDialog.addEventListener("close", handleDialogClose);
+letterDialog.addEventListener("close", restorePage);
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && openingCard) {
+    openingCard.classList.remove("is-opening");
+    openingCard.removeAttribute("aria-busy");
+    openingCard = null;
+  }
+});
+document.addEventListener("visibilitychange", () => {
+  document.body.classList.toggle("page-inactive", document.hidden);
+});
+mobilePetalsQuery.addEventListener("change", renderSakura);
+reducedMotionQuery.addEventListener("change", renderSakura);
 
 renderLetters();
+renderSakura();

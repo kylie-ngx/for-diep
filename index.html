@@ -4,39 +4,81 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="A collection of farewell messages for Điệp.">
+  <meta name="theme-color" content="#F3EEE4">
   <title>A special message for Điệp</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
 <body>
+  <div class="sakura-layer" id="sakura-layer" aria-hidden="true"></div>
+
+  <div class="fuji-landscape" aria-hidden="true">
+    <svg
+      viewBox="0 0 1600 480"
+      preserveAspectRatio="none"
+      focusable="false"
+      role="presentation"
+    >
+      <path
+        class="fuji-haze" fill="#CAC5BB"
+        d="M0 353 Q173 304 330 327 Q475 279 591 310 Q866 245 1030 307 Q1308 262 1600 341 V480 H0 Z"
+      />
+      <path
+        class="fuji-main" fill="#8F9695"
+        d="M35 459 Q321 423 484 319 Q605 226 748 90 L772 88 L786 94 L815 90 L841 94 Q960 223 1104 322 Q1307 425 1570 459 V480 H35 Z"
+      />
+      <path
+        class="fuji-shadow" fill="#747D7D"
+        d="M802 93 L841 94 Q960 223 1104 322 Q1307 425 1570 459 V480 H752 Q906 390 897 316 Q884 233 802 93 Z"
+      />
+      <path
+        class="fuji-snow" fill="#F3EEE4"
+        d="M664 167 Q707 129 748 90 L772 88 L786 94 L815 90 L841 94 Q875 132 921 176 L870 160 L856 180 L826 157 L798 176 L773 153 L745 173 L723 160 L686 178 Z"
+      />
+      <path
+        class="fuji-foreground" fill="#CAC5BB"
+        d="M0 435 Q360 402 678 441 Q927 473 1197 418 Q1439 391 1600 431 V480 H0 Z"
+      />
+    </svg>
+  </div>
+
   <main class="app">
     <section class="screen intro-screen" id="intro-screen" aria-labelledby="intro-title">
       <div class="intro-content">
-        <h1 id="intro-title">A special message for Điệp</h1>
+        <h1 id="intro-title"><span>A special message</span> <span>for Điệp</span></h1>
         <button class="primary-button" id="unfold-button" type="button">Unfold</button>
       </div>
     </section>
 
     <section class="screen letters-screen" id="letters-screen" aria-labelledby="letters-title" hidden>
       <div class="letters-content">
-        <h1 id="letters-title" tabindex="-1">For Điệp, before Japan.</h1>
+        <h1 id="letters-title" lang="vi" tabindex="-1">Gửi bạn Điệp...</h1>
         <ul class="letters-list" id="letters-list" aria-label="Letters for Điệp"></ul>
       </div>
     </section>
   </main>
 
   <dialog class="letter-dialog" id="letter-dialog" aria-labelledby="dialog-sender" aria-describedby="dialog-message">
-    <div class="dialog-content">
-      <button
-        class="dialog-close"
-        id="dialog-close"
-        type="button"
-        aria-label="Close letter"
-        title="Close letter"
-      >&times;</button>
-      <p class="dialog-label">Letter from</p>
-      <h2 id="dialog-sender"></h2>
-      <p class="dialog-message" id="dialog-message"></p>
+    <div class="dialog-sheet">
+      <header class="dialog-header">
+        <div>
+          <p class="dialog-label">Letter from</p>
+          <h2 id="dialog-sender"></h2>
+        </div>
+        <button
+          class="dialog-close"
+          id="dialog-close"
+          type="button"
+          aria-label="Close letter"
+          title="Close letter"
+        >&times;</button>
+      </header>
+      <div class="dialog-body" tabindex="0" role="region" aria-labelledby="dialog-sender">
+        <p class="dialog-message" id="dialog-message"></p>
+      </div>
     </div>
   </dialog>
 </body>
